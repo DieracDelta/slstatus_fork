@@ -58,7 +58,7 @@ static const struct arg args[] = {
 	{ cpu_freq, "%s Mhz] ", NULL    },
 	{ ram_perc, "[RAM: %2s%%] ", NULL    },
 	{ vol_perc, "[VOL: %s ]",       "/dev/mixer" },
-  {battery_state, "[BAT: %s ", "BAT1"},
-  {battery_perc, "%s]", "BAT1"},
+  {battery_perc, "[BAT:%s%%@", "BAT1"},
+  {battery_state, "%s]", "BAT1"},
 	{ datetime, "[%s]", "%F %r" },
 };
