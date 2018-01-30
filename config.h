@@ -4,10 +4,10 @@
 static const int interval = 1000;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "n/a";
+static const char unknown_str[] = "this is awk but fuck i got nothin";
 
 /* maximum output string length */
-#define MAXLEN 2048
+#define MAXLEN 4096
 
 /*
  * function             description                     argument
@@ -52,7 +52,7 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
 	/* function format          argument */
   {wifi_perc, "[wifi: %s %%", "wlp61s0"},
-  {wifi_essid, "%s]", "wlp61s0"},
+  {wifi_essid, "%s]   |   ", "wlp61s0"},
   {uptime, "[UTIME: %s]", NULL},
 	{ cpu_perc, "[CPU: %3s%% @", NULL    },
 	{ cpu_freq, "%s Mhz] ", NULL    },

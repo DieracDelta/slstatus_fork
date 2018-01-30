@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 #include <X11/Xlib.h>
+#include <stdbool.h>
 
 #include "arg.h"
 #include "slstatus.h"
@@ -52,6 +53,8 @@ usage(void)
 int
 main(int argc, char *argv[])
 {
+  static bool blinkey = 0;
+
 	struct sigaction act;
 	struct timespec start, current, diff, intspec, wait;
 	size_t i, len;
@@ -85,8 +88,18 @@ main(int argc, char *argv[])
 	while (!done) {
 		clock_gettime(CLOCK_MONOTONIC, &start);
 
-		status[0] = '\0';
-		for (i = len = 0; i < LEN(args); i++) {
+    char * blinky;
+    if(blinkey)
+      blinky = "\x01";
+    else
+      blinky = "\x02";
+      
+
+    blinkey = !blinkey;
+    i = len = 0;
+    char * bruh = "%s";
+    len += snprintf(status + len, sizeof(status) - len, bruh, blinky);
+		for (; i < LEN(args); i++) {
 			len += snprintf(status + len, sizeof(status) - len,
 			                args[i].fmt, args[i].func(args[i].args));
 
@@ -95,9 +108,11 @@ main(int argc, char *argv[])
 			}
 		}
 
+
 		if (sflag) {
 			printf("%s\n", status);
 		} else {
+      printf("%s\n", status);
 			XStoreName(dpy, DefaultRootWindow(dpy), status);
 			XSync(dpy, False);
 		}
