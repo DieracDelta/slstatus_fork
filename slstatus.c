@@ -53,7 +53,8 @@ usage(void)
 int
 main(int argc, char *argv[])
 {
-  static bool blinkey = 0;
+  static bool blinking_color = false;
+  static bool battery_low = true;
 
 	struct sigaction act;
 	struct timespec start, current, diff, intspec, wait;
@@ -87,32 +88,41 @@ main(int argc, char *argv[])
 
 	while (!done) {
 		clock_gettime(CLOCK_MONOTONIC, &start);
-
-    char * blinky;
-    if(blinkey)
-      blinky = "\x01";
-    else
-      blinky = "\x02";
-      
-
-    blinkey = !blinkey;
     i = len = 0;
-    char * bruh = "%s";
-    len += snprintf(status + len, sizeof(status) - len, bruh, blinky);
-		for (; i < LEN(args); i++) {
-			len += snprintf(status + len, sizeof(status) - len,
-			                args[i].fmt, args[i].func(args[i].args));
+    int percent_remaining;
 
-			if (len >= sizeof(status)) {
-				status[sizeof(status) - 1] = '\0';
-			}
-		}
+    battery_low = is_battery_low(&percent_remaining);
+
+
+    if(battery_low){
+      char * string_1;
+      char * string_2 = "%% !!! RED ALERT RED ALERT YOU FUCKED UP BOI CUZ BATTERY LOW --- THIS IS SUPER BAD NOT GOOD NOT GOOD !!!!!!";
+      if(blinking_color)
+        string_1 = "\x05 YOU'RE AT ";
+      else
+        string_1 = "\x06 YOU'RE AT ";
+      blinking_color = !blinking_color;
+      char * reg_fmt = "%s %d %s";
+      len += snprintf(status + len, sizeof(status) - len, reg_fmt, string_1, percent_remaining, string_2);
+    }
+    else{
+      for (; i < LEN(args); i++) {
+        len += snprintf(status + len, sizeof(status) - len,
+                        args[i].fmt, args[i].func(args[i].args));
+
+        if (len >= sizeof(status)) {
+          status[sizeof(status) - 1] = '\0';
+        }
+      }
+    }
+
+
 
 
 		if (sflag) {
 			printf("%s\n", status);
 		} else {
-      printf("%s\n", status);
+      /* printf("%s\n", status); */
 			XStoreName(dpy, DefaultRootWindow(dpy), status);
 			XSync(dpy, False);
 		}

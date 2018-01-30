@@ -2,8 +2,12 @@
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "../util.h"
+
+// threshold battery percentage
+#define THRESHOLD 15
 
 const char *
 battery_perc(const char *bat)
@@ -37,7 +41,7 @@ battery_state(const char *bat)
 		{ "Charging",    "CHARGING" },
 		{ "Discharging", "DYING" },
 		{ "Full",        "FULL OF SHIT" },
-		{ "Unknown",     "/" },
+		{ "Unknown",     "YOU LOST UR BATTERY bruhhh" },
 	};
 	size_t i;
 	char path[PATH_MAX], state[12];
@@ -53,4 +57,18 @@ battery_state(const char *bat)
 		}
 	}
 	return (i == LEN(map)) ? "?" : map[i].symbol;
+}
+
+bool is_battery_low(int * how_low){
+	char path[PATH_MAX];
+	snprintf(path, sizeof(path), "%s%s%s", "/sys/class/power_supply/", "BAT1", "/capacity");
+  pscanf(path, "%i", how_low);
+
+  char path2[PATH_MAX], state[12];
+  snprintf(path2, sizeof(path2), "%s%s%s", "/sys/class/power_supply/", "BAT1", "/status");
+  pscanf(path2, "%12s", state);
+  if(strcmp(state, "Discharging") == 0 && *how_low <= THRESHOLD ){
+    return true;
+  }
+  return false;
 }
