@@ -56,7 +56,18 @@ wifi_perc(const char *iface)
 
 	perc = (float)cur / total * 100.0;
 
-	return bprintf("%.0f", perc);
+  char * color_level;
+  /* if(perc > 95){ */
+  /*   color_level = "\x07 "; */
+  /* } */
+  /* else if(perc > 50){ */
+  color_level = "\x08 ";
+  /* } */
+  /* else{ */
+  /* color_level = "\x05 "; */
+  /* } */
+
+	return bprintf("%s|   wifi: %.0f%%", color_level, perc);
 }
 
 const char *

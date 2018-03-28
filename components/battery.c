@@ -40,7 +40,7 @@ battery_state(const char *bat)
 	} map[] = {
 		{ "Charging",    "CHARGING" },
 		{ "Discharging", "DYING" },
-		{ "Full",        "FULL OF SHIT" },
+		{ "Full",        "FILLED" },
 		{ "Unknown",     "YOU LOST UR BATTERY bruhhh" },
 	};
 	size_t i;

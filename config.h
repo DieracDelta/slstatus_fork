@@ -51,14 +51,14 @@ static const char unknown_str[] = "this is awk but fuck i got nothin";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-  {wifi_perc, "[wifi: %s %%", "wlp61s0"},
-  {wifi_essid, "%s]   |   ", "wlp61s0"},
-  {uptime, "[UTIME: %s]", NULL},
-	{ cpu_perc, "[CPU: %3s%% @", NULL    },
-	{ cpu_freq, "%s Mhz] ", NULL    },
-	{ ram_perc, "[RAM: %2s%%] ", NULL    },
-	{ vol_perc, "[VOL: %s ]",       "/dev/mixer" },
-  {battery_perc, "[BAT:%s%%@", "BAT1"},
-  {battery_state, "%s]", "BAT1"},
-	{ datetime, "[%s]", "%F %r" },
+  {wifi_perc, "%s", "wlp61s0"},
+  {wifi_essid, "%s   |   ", "wlp61s0"},
+  {uptime, "UTIME: %s   |   ", NULL},
+	{ cpu_perc, "CPU: %3s%% @", NULL    },
+	{ cpu_freq, "%s Mhz   |   ", NULL    },
+	{ ram_perc, "RAM: %2s%%   |   ", NULL    },
+	{ vol_perc, "VOL: %s   |   ",       "/dev/mixer" },
+  {battery_perc, "BAT:%s%%@", "BAT1"},
+  {battery_state, "%s   |   ", "BAT1"},
+	{ datetime, "%s   |", "%F %r" },
 };
