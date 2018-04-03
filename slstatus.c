@@ -104,7 +104,9 @@ main(int argc, char *argv[])
       blinking_color = !blinking_color;
       char * reg_fmt = "%s %d %s";
       len += snprintf(status + len, sizeof(status) - len, reg_fmt, string_1, percent_remaining, string_2);
-    }
+
+
+  }
     else{
       for (; i < LEN(args); i++) {
         len += snprintf(status + len, sizeof(status) - len,

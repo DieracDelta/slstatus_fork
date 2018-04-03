@@ -8,6 +8,11 @@ static const char unknown_str[] = "this is awk but fuck i got nothin";
 
 /* maximum output string length */
 #define MAXLEN 4096
+#define ALIENFX 1
+
+#ifdef ALIENFX
+#include <alienfx.h>
+#endif
 
 /*
  * function             description                     argument
@@ -49,16 +54,22 @@ static const char unknown_str[] = "this is awk but fuck i got nothin";
  * wifi_perc            WiFi signal in percent          interface name
  * wifi_essid           WiFi ESSID                      interface name
  */
+
 static const struct arg args[] = {
 	/* function format          argument */
+#ifdef ALIENFX
+  {get_red, "R %d | "},
+  {get_blue, "B %d | "},
+  {get_green, "G %d | "},
+#endif
   {wifi_perc, "%s", "wlp61s0"},
   {wifi_essid, "%s   |   ", "wlp61s0"},
   {uptime, "UTIME: %s   |   ", NULL},
-	{ cpu_perc, "CPU: %3s%% @", NULL    },
-	{ cpu_freq, "%s Mhz   |   ", NULL    },
-	{ ram_perc, "RAM: %2s%%   |   ", NULL    },
-	{ vol_perc, "VOL: %s   |   ",       "/dev/mixer" },
+	{cpu_perc, "CPU: %3s%% @", NULL    },
+	{cpu_freq, "%s Mhz   |   ", NULL    },
+	{ram_perc, "RAM: %2s%%   |   ", NULL    },
+	{vol_perc, "VOL: %s   |   ",       "/dev/mixer" },
   {battery_perc, "BAT:%s%%@", "BAT1"},
   {battery_state, "%s   |   ", "BAT1"},
-	{ datetime, "%s   |", "%F %r" },
+	{datetime, "%s   |", "%F %r" },
 };
