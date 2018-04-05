@@ -95,8 +95,9 @@ main(int argc, char *argv[])
 
 
     if(battery_low){
+      low_power_mode(true);
       char * string_1;
-      char * string_2 = "%% !!! RED ALERT RED ALERT YOU FUCKED UP BOI CUZ BATTERY LOW --- THIS IS SUPER BAD NOT GOOD NOT GOOD !!!!!!";
+      char * string_2 = "%% BAT IS LOW:   ";
       if(blinking_color)
         string_1 = "\x05 YOU'RE AT ";
       else
@@ -108,6 +109,7 @@ main(int argc, char *argv[])
 
   }
     else{
+      low_power_mode(false);
       for (; i < LEN(args); i++) {
         len += snprintf(status + len, sizeof(status) - len,
                         args[i].fmt, args[i].func(args[i].args));
